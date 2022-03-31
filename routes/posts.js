@@ -5,6 +5,7 @@ const PostController = require("../controllers/posts");
 const checkAuth = require("../middleware/check-auth");
 const extractFile = require("../middleware/file");
 const router = express.Router();
+const path = require("path");
 
 const MIME_TYPE_MAP = {
     "image/png": "png",
@@ -19,8 +20,7 @@ const storage = multer.diskStorage({
         if (isValid) {
             error = null;
         }
-        console.log(error);
-        cb(error, "backend/images");
+        cb(error, path.join(__dirname, "images"));
     },
     filename: (req, file, cb) => {
         const name = file.originalname
@@ -51,7 +51,7 @@ const storage = multer.diskStorage({
 //     });
 //   });
 
-router.post("", checkAuth, multer({ storage: storage }).single("imagePath"), PostController.createPost);
+router.post("", checkAuth, multer({ storage: storage }).single("image"), PostController.createPost);
 
 router.get('', PostController.getPosts);
 
