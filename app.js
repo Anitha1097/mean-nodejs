@@ -5,7 +5,8 @@ const mongoose = require("mongoose");
 const postsRoutes = require("./routes/posts");
 const userRoutes = require("./routes/user");
 const app = express();
-mongoose.connect("mongodb+srv://mongo_db:" + process.env.MONGO_ATLAS_PW + "@cluster0.82suc.mongodb.net/post_db")
+require('dotenv').config({ path: __dirname + '/.env' });
+mongoose.connect("mongodb+srv://mongo_db:" + process.env['MONGO_ATLAS_PW'] + "@cluster0.82suc.mongodb.net/post_db")
     .then(() => {
         console.log("Connected to database!");
     })
